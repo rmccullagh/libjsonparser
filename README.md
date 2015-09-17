@@ -1,5 +1,5 @@
 # jsonparser
-JSON parser in C
+JSON parser in C implements https://www.ietf.org/rfc/rfc4627.txt
 
 # Dependencies
 - libobject - https://github.com/libobject
