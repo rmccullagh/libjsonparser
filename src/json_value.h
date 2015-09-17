@@ -11,32 +11,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+#ifndef __JSON_VALUE_H__
+#define __JSON_VALUE_H__
 
-#ifndef __JSON_INTERNAL_H__
-#define __JSON_INTERNAL_H__
-
-#include <stddef.h>
-#include <object.h>
-#include "jsonparser.h"
-
-typedef struct json_parser_t {
-	char* text;
-	size_t pos;
-	size_t len;
-	size_t line;
-	char look;
-	int status;
-	const char* error_message;
-} json_parser_t;
-
+#include "json_internal.h"
 
 JSON_PARSER_PRIVATE
-json_parser_t* json_parser_create(const char*);
+Object* json_parse_value(json_parser_t*);
 
 JSON_PARSER_PRIVATE
-void json_parser_destroy(json_parser_t*);
+void json_value_reset(void);
 
-JSON_PARSER_PRIVATE
-Object* json_internal_parse(json_parser_t*);
-
-#endif /* __JSON_INTERNAL_H__ */
+#endif /* __JSON_VALUE_H__ */

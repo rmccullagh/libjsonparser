@@ -38,6 +38,8 @@ fi
 AC_CONFIG_FILES([
  Makefile
  src/Makefile
+ src/json_version.h
+ test/Makefile
 ])
 AC_OUTPUT
 

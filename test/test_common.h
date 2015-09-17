@@ -12,31 +12,24 @@
  * GNU General Public License for more details.
  */
 
-#ifndef __JSON_INTERNAL_H__
-#define __JSON_INTERNAL_H__
+#ifndef __TEST_COMMON_H__
+#define __TEST_COMMON_H__
 
-#include <stddef.h>
-#include <object.h>
-#include "jsonparser.h"
+#include <stdio.h>
+#include <string.h>
 
-typedef struct json_parser_t {
-	char* text;
-	size_t pos;
-	size_t len;
-	size_t line;
-	char look;
-	int status;
-	const char* error_message;
-} json_parser_t;
+#define STRINGIFY(x) #x
 
+#define expect(exp) do { \
+	if(!(exp)) { \
+		fprintf(stderr, "%s:%d:%s The expression '%s' is not true\n", __FILE__, __LINE__, __func__, STRINGIFY(exp)); \
+		exit(1); \
+	} \
+} while(0)
 
-JSON_PARSER_PRIVATE
-json_parser_t* json_parser_create(const char*);
+static inline int str_equal(const char* a, const char* b)
+{
+	return strcmp(a, b) == 0;
+}
 
-JSON_PARSER_PRIVATE
-void json_parser_destroy(json_parser_t*);
-
-JSON_PARSER_PRIVATE
-Object* json_internal_parse(json_parser_t*);
-
-#endif /* __JSON_INTERNAL_H__ */
+#endif /* __TEST_COMMON_H__ */

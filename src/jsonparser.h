@@ -1,7 +1,7 @@
 /**
  * @file jsonparser.h
  * @author Ryan McCullagh
- * @brief  Public API function of the jsonparser library
+ * @brief Public API function of the jsonparser library
  * 
  * @section LICENSE
  *
@@ -19,9 +19,10 @@
  *
  * @section DESCRIPTION
  *
- * The json-parser (jsonparser) library parses JSON text into a useful Object
- * structure (http://github.com/libobject/libobject) provided that the JSON is 
- * correct as dictated by the specification located at https://www.ietf.org/rfc/rfc4627.txt
+ * The json-parser (jsonparser) library parses JSON text into a useful i
+ * Object structure (http://github.com/libobject/libobject) provided that 
+ * the JSON is correct as dictated by the specification located at 
+ * https://www.ietf.org/rfc/rfc4627.txt
  */
 
 #ifndef __JSON_PARSER_H__
@@ -36,10 +37,10 @@
 #include <object.h>
 
 typedef struct json_error_t {
-	const char* message;
-	size_t			message_length;
-	size_t	    error_column;
-	size_t		  error_line;
+	char* message;
+	size_t	    column;
+	size_t		  line;
+	char				token;
 } json_error_t;
 
 #ifdef HAVE_JSON_PARSER_DEBUG
@@ -54,9 +55,12 @@ typedef struct json_error_t {
   #define JSON_PARSER_HELPER_DLL_LOCAL
 #else
   #if __GNUC__ >= 4
-    #define JSON_PARSER_HELPER_DLL_IMPORT __attribute__ ((visibility ("default")))
-    #define JSON_PARSER_HELPER_DLL_EXPORT __attribute__ ((visibility ("default")))
-    #define JSON_PARSER_HELPER_DLL_LOCAL  __attribute__ ((visibility ("hidden")))
+    #define JSON_PARSER_HELPER_DLL_IMPORT \
+			__attribute__ ((visibility ("default")))
+    #define JSON_PARSER_HELPER_DLL_EXPORT \
+			__attribute__ ((visibility ("default")))
+    #define JSON_PARSER_HELPER_DLL_LOCAL \
+			__attribute__ ((visibility ("hidden")))
   #else
     #define JSON_PARSER_HELPER_DLL_IMPORT
     #define JSON_PARSER_HELPER_DLL_EXPORT
@@ -70,6 +74,8 @@ typedef struct json_error_t {
   #define JSON_PARSER_API JSON_PARSER_HELPER_DLL_IMPORT
 #endif
 
+#define JSON_PARSER_PRIVATE JSON_PARSER_HELPER_DLL_LOCAL
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -77,9 +83,10 @@ extern "C" {
 /**
  * @brief Parse JSON text into an Object.
  *
- * This function will try to parse a JSON text buffer. It will return an Object
- * if the parsing was succesfull, otherwise it will return NULL and a json_error
- * structure will be populated and available to be gotten by calling json_last_error 
+ * This function will try to parse a JSON text buffer. It will return an 
+ * Object if the parsing was succesfull, otherwise it will return NULL 
+ * and a json_error structure will be populated and available to be gotten 
+ * by calling json_last_error 
  * 
  * @param source The JSON text terminated by a NULL byte
  * @return NULL|Object

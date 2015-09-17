@@ -14,16 +14,14 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "json_internal.h"
+#include "json_value.h"
 
-static bool is_control_char(int);
-static void parser_next(json_parser_t* self);
-
-json_parser_t* 
-json_parser_new(const char* text)
+JSON_PARSER_PRIVATE json_parser_t* 
+json_parser_create(const char* text)
 {
 	json_parser_t* self;
-	size_t text_length;
 	
 	self = calloc(1, sizeof(json_parser_t));
 	
@@ -39,41 +37,28 @@ json_parser_new(const char* text)
 		return NULL;
 	}
 
-	memcpy(self->text, source, self->len);
+	memcpy(self->text, text, self->len);
 	
 	self->text[self->len] = '\0';
 	self->pos = 0;
 	self->line = 1;
-	self->look = -1;
+	self->look = EOF;
 	self->status = 0;
-	
+	self->error_message = "";
+
 	return self;
 }
 
-Object* 
+JSON_PARSER_PRIVATE void 
+json_parser_destroy(json_parser_t* self)
+{
+	free(self->text);
+	free(self);
+	json_value_reset();
+}
+
+JSON_PARSER_PRIVATE Object* 
 json_internal_parse(json_parser_t* self)
 {
-	Object* retval = NULL;
-	
-	return retval;
+	return json_parse_value(self);
 }
-
-
-
-
-
-
-
-
-
-
-
-static bool is_control_char(int c)
-{
-	if(c == 0x7f)
-		return true;
-	return (c >= 0x00 && c <= 0x1f);
-}
-
-
-
