@@ -1,6 +1,17 @@
 # jsonparser
 JSON parser in C
 
+# Dependencies
+- libobject - https://github.com/libobject
+- libmutablestring - https://github.com/rmccullagh/libmutablestring
+
+# Install
+- git clone https://github.com/rmccullagh/jsonparser
+- ./autogen.sh
+- make
+- make check
+- sudo make install
+
 # Example
 
 ```c
