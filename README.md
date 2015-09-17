@@ -9,10 +9,11 @@ JSON parser in C
 #include <stdio.h>
 
 static const char* source = "{\"name\": \"Ryan\"}";
+typedef Object JSON_VALUE;
 
 int main(void)
 {
-	Object* JSON = json_parse(source);
+	JSON_VALUE* JSON = json_parse(source);
 	json_error_t error;
 
 	if(!JSON)
