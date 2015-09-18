@@ -470,7 +470,6 @@ static Object*
 parse_object(json_parser_t* self)
 {
 	skip_white(self);
-
 	Object* map = newMap(2);
 
 	if(!map)
@@ -587,13 +586,12 @@ parse_object(json_parser_t* self)
 static Object*
 parse_array(json_parser_t* self)
 {
+	skip_white(self);
 	Object* array = newArray(2);
 	Object* value = NULL;
 
 	if(!array)
 		return NULL;
-
-	skip_white(self);
 
 	if(self->look == ']')
 		return array;
@@ -635,7 +633,7 @@ parse_array(json_parser_t* self)
 static Object*
 parse_true(json_parser_t* self)
 {
-	while(true_literal != '\0')
+	while(*true_literal != '\0')
 	{
 		if(self->look != *true_literal)
 			return NULL;
@@ -651,7 +649,7 @@ parse_true(json_parser_t* self)
 static Object*
 parse_false(json_parser_t* self)
 {
-	while(false_literal != '\0')
+	while(*false_literal != '\0')
 	{
 		if(self->look != *false_literal)
 			return NULL;
@@ -667,7 +665,7 @@ parse_false(json_parser_t* self)
 static Object*
 parse_null(json_parser_t* self)
 {
-	while(null_literal != '\0')
+	while(*null_literal != '\0')
 	{
 		if(self->look != *null_literal)
 			return NULL;
@@ -745,6 +743,11 @@ json_parse_value(json_parser_t* self)
 		
 		retval = parse_object(self);
 
+		if(retval == NULL)
+		{
+			return NULL;
+		}
+
 		skip_white(self);
 
 		if(!match(self, '}'))
@@ -808,6 +811,6 @@ json_parse_value(json_parser_t* self)
 		retval = NULL;
 	}
 
-	skip_white(self);	
+	//skip_white(self);	
 	return retval;
 }
