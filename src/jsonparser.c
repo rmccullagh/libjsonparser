@@ -30,20 +30,12 @@ extern "C" {
 static json_parser_t* parser = NULL;
 static json_error_t error;
 
-static void dump_parser(json_parser_t* p)
+static void 
+json_set_last_error(json_error_t* error) 
 {
-	printf("json_parser_t(%p) {\n", (void *)p);
-	printf("\ttext=%s\n", p->text);
-	printf("\tlen=%zu\n", p->len);
-	printf("\tpos=%zu\n", p->pos);
-	printf("\tline=%zu\n", p->line);
-	printf("\tlook=%c\n", p->look);
-}
-
-static void json_set_last_error(json_error_t* error) 
-{
-	error->message = malloc(strlen(parser->error_message) + 1);
-	memcpy(error->message, parser->error_message, strlen(parser->error_message) + 1);
+	size_t msg_len = strlen(parser->error_message);
+	error->message = malloc(msg_len + 1);
+	memcpy(error->message, parser->error_message, msg_len + 1);
 	error->column = parser->pos;
 	error->line = parser->line;
 	error->token = parser->look;
@@ -77,8 +69,9 @@ JSON_PARSER_API
 void json_last_error(json_error_t* _error) 
 {
 
-	_error->message = malloc(strlen(error.message) + 1);
-	memcpy(_error->message, error.message, strlen(error.message) + 1);
+	size_t msg_len = strlen(error.message);
+	_error->message = malloc(msg_len + 1);
+	memcpy(_error->message, error.message, msg_len + 1);
 	free(error.message);
 	error.message = NULL;
 	_error->column = error.column;
