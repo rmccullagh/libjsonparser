@@ -330,14 +330,10 @@ utf8_encode(MutableString* buffer, unsigned long code_point)
 	}
 }
 
-/*
- *^"([^\u0000-\u001F"\\]|\\(["/\\bfnrt]|u[0-9a-fA-F]{4}))*"$/
- */
 static MutableString*
 parse_string(json_parser_t* self)
 {
 
-/* Saves me 2 * N case statements lines of code */
 #define CASE_ACTION(_char) \
 	mutable_string_append_c(str, _char); \
 	bytes_read++; \
@@ -528,7 +524,10 @@ parse_object(json_parser_t* self)
 
 	while(self->look == ',')
 	{	
-		match(self, ',');
+		if(!match(self, ',')) {
+			objectDestroy(map);
+			return NULL;
+		}
 
 		skip_white(self);
 
@@ -609,7 +608,10 @@ parse_array(json_parser_t* self)
 
 	while(self->look == ',')
 	{
-		match(self, ',');
+		if(!match(self, ',')) {
+			objectDestroy(array);
+			return NULL;
+		}
 
 		skip_white(self);
 
@@ -633,12 +635,14 @@ parse_array(json_parser_t* self)
 static Object*
 parse_true(json_parser_t* self)
 {
-	while(*true_literal != '\0')
+	const char* t = "true";
+
+	while(*t != '\0')
 	{
-		if(self->look != *true_literal)
+		if(self->look != *t)
 			return NULL;
 
-		true_literal++;
+		t++;
 		
 		parser_next(self);
 	}
@@ -649,12 +653,14 @@ parse_true(json_parser_t* self)
 static Object*
 parse_false(json_parser_t* self)
 {
-	while(*false_literal != '\0')
+	const char* t = "false";
+
+	while(*t != '\0')
 	{
-		if(self->look != *false_literal)
+		if(self->look != *t)
 			return NULL;
 
-		false_literal++;
+		t++;
 		
 		parser_next(self);
 	}
@@ -665,12 +671,14 @@ parse_false(json_parser_t* self)
 static Object*
 parse_null(json_parser_t* self)
 {
-	while(*null_literal != '\0')
+	const char* t = "null";
+
+	while(*t != '\0')
 	{
-		if(self->look != *null_literal)
+		if(self->look != *t)
 			return NULL;
 
-		null_literal++;
+		t++;
 		
 		parser_next(self);
 	}
