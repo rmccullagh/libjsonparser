@@ -21,6 +21,9 @@
 #include "json_value.h"
 
 static int first_pass = 0;
+static const char* true_literal = "true";
+static const char* false_literal = "false";
+static const char* null_literal = "null";
 
 JSON_PARSER_PRIVATE
 void json_value_reset(void)
@@ -197,11 +200,11 @@ parse_number(json_parser_t* self, bool* success)
 	mutable_string_append_c(buffer, self->look);
 	parser_next(self);
 
-	if(first == 0 && self->look != '.')
+	if(first == 0 && self->look == '0')
 	{
 		mutable_string_free(buffer);
 		set_error(self, 
-				"unexpected 0, a number can only be followed by one 0, and that zero must be followed by a '.'");
+				"unexpected 0, a number can only be followed by one 0");
 
 		goto done;
 	}
