@@ -56,6 +56,22 @@ Object* json_parse(const char* text)
 
 	retval = json_internal_parse(parser);
 
+	if(retval)
+	{
+		if(parser->pos < parser->len)
+		{
+			parser->error_message = "unexpected token (finished parsing stream early)";
+			
+			json_set_last_error(&error);
+
+			json_parser_destroy(parser);
+			
+			objectDestroy(retval);
+
+			return NULL;		
+		}
+	}
+
 	json_set_last_error(&error);
 
 	json_parser_destroy(parser);
