@@ -4,6 +4,8 @@ JSON parser in C implements https://www.ietf.org/rfc/rfc4627.txt
 # Dependencies
 - libobject - https://github.com/libobject
 - libmutablestring - https://github.com/rmccullagh/libmutablestring
+- autotools
+- libtool
 
 # Install
 - git clone https://github.com/rmccullagh/jsonparser
