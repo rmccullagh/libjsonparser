@@ -21,9 +21,6 @@
 #include "json_value.h"
 
 static int first_pass = 0;
-static const char* true_literal = "true";
-static const char* false_literal = "false";
-static const char* null_literal = "null";
 
 JSON_PARSER_PRIVATE
 void json_value_reset(void)
