@@ -34,8 +34,13 @@ static void
 json_set_last_error(json_error_t* error) 
 {
 	size_t msg_len = strlen(parser->error_message);
-	error->message = malloc(msg_len + 1);
-	memcpy(error->message, parser->error_message, msg_len + 1);
+	
+	if(msg_len) {
+		error->message = malloc(msg_len + 1);
+		memcpy(error->message, parser->error_message, msg_len + 1);
+	} else {
+		error->message = NULL;
+	}
 	error->column = parser->pos;
 	error->line = parser->line;
 	error->token = parser->look;
@@ -86,10 +91,17 @@ void json_last_error(json_error_t* _error)
 {
 
 	size_t msg_len = strlen(error.message);
-	_error->message = malloc(msg_len + 1);
-	memcpy(_error->message, error.message, msg_len + 1);
-	free(error.message);
+	
+	if(msg_len) {
+		_error->message = malloc(msg_len + 1);
+		memcpy(_error->message, error.message, msg_len + 1);
+		free(error.message);
+	} else {
+		_error->message = NULL;
+	}
+	
 	error.message = NULL;
+	
 	_error->column = error.column;
 	_error->line = error.line;
 	_error->token = error.token;
