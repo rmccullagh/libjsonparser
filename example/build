@@ -1,0 +1,2 @@
+#!/bin/bash
+gcc -Wall -Wextra json.c -o json -lobject -ljsonparser -leasyio
