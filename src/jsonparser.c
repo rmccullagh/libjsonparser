@@ -65,7 +65,8 @@ Object* json_parse(const char* text)
 	{
 		if(parser->pos < parser->len)
 		{
-			parser->error_message = "unexpected token (finished parsing stream early)";
+			parser->error_message = 
+				"unexpected token (finished parsing stream early)";
 			
 			json_set_last_error(&error);
 
