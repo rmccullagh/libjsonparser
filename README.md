@@ -1,4 +1,4 @@
-# jsonparser
+# libjsonparser
 JSON parser in C implements https://www.ietf.org/rfc/rfc4627.txt
 
 # Dependencies
