@@ -1,5 +1,5 @@
 # libjsonparser
-JSON parser in C implements https://www.ietf.org/rfc/rfc4627.txt. It parses JSON text into a C representation. The data structure is a C struct named `Object`, which is a library located at [https://github.com/libobject](https://github.com/libobject).
+JSON parser in C implements https://www.ietf.org/rfc/rfc4627.txt. It parses JSON text into a C representation. The data structure is a C struct named `Object`, which is a C library located at [https://github.com/libobject](https://github.com/libobject/libobject). `Object` supports every value that JSON has and even more.
 
 # Dependencies
 - libobject - https://github.com/libobject
@@ -22,11 +22,10 @@ JSON parser in C implements https://www.ietf.org/rfc/rfc4627.txt. It parses JSON
 #include <stdio.h>
 
 static const char* source = "{\"name\": \"Ryan\"}";
-typedef Object JSON_VALUE;
 
 int main(void)
 {
-	JSON_VALUE* JSON = json_parse(source);
+	Object* JSON = json_parse(source);
 	json_error_t error;
 
 	if(!JSON)
