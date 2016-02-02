@@ -37,10 +37,10 @@
 #include <object.h>
 
 typedef struct json_error_t {
-	char* message;
-	size_t	    column;
-	size_t		  line;
-	char				token;
+	char*  message;
+	size_t column;
+	size_t line;
+	char   token;
 } json_error_t;
 
 #ifdef HAVE_JSON_PARSER_DEBUG
