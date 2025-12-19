@@ -1,6 +1,11 @@
 # libjsonparser
 JSON parser in C implements https://www.ietf.org/rfc/rfc4627.txt. It parses JSON text into a C representation. The data structure is a C struct named `Object`, which is a C library located at [https://github.com/libobject](https://github.com/libobject/libobject). `Object` supports every value that JSON has and even more.
 
+# Key Concepts
+- Low level C library
+- Parsed JSON text into a data structure represented in C 
+- Implements the RFC 7159 proposed standard.
+
 # Dependencies
 - libobject - https://github.com/libobject
 - libmutablestring - https://github.com/rmccullagh/libmutablestring
